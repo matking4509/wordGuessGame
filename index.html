@@ -23,15 +23,79 @@
       </div>
       <div class="row">
         <div class="col-6 text-center border">
-          <p>This is where the Hints go</p>
+          <p><span id="hint">This is where the Hints go</span></p>
         </div>
         <div class="col-6 text-center border">
-          <p>Waiting on Word...</p>
-          <p>You have typed no Letters</p>
+          <p><span id="word-mask">Waiting on Word...</span></p>
+          <p> <span id="used-letters">You have typed no Letters</span></p>
+          <p>You have <span id="guess-count">XX</span> guesses remaining</p>
         </div>
       </div>
     </div>
-    <!-- <script type="text/javascript" src="js/pw.js"></script> -->
+    <script type="text/javascript">
+    
+    var debugLogs = true;
+
+    // Word/Hint Dictionary
+    var wordObj = {
+      word : ["professor",
+              "fry",
+              "leela"],
+      hint : ["Old Cranky Man",
+              "Young Redheaded Uncle",
+              "One-Eyed Brannigan Lover"]
+    };
+
+    //Select Word for Game
+    var wordSelector = Math.floor(Math.random()*wordObj["word"].length)
+    var guessCnt = 10;
+    var usedLettersAry = ["f","l","c"];
+    var wordMask = '';
+    var typedLetter = "r";
+
+    //Foreach in Used Letter Array to build word mask
+    wordObj["word"][wordSelector].split('').forEach(function(element) {
+      var wordSearch = usedLettersAry.indexOf(element);
+      if (wordSearch >= 0) {
+        wordMask = wordMask + element + " ";
+      } else {
+        wordMask = wordMask + "_ ";
+      }
+    });
+
+
+  // ** KeyCapture EVENTS! Next!
+
+
+    //print Hint 
+    var hintDoc = document.getElementById("hint");
+    hintDoc.textContent = wordObj["hint"][wordSelector];
+
+    //print WordMask
+    var wordMaskDoc = document.getElementById("word-mask");
+    wordMaskDoc.textContent = wordMask;
+
+    //print Number of guesses Remaining.
+    var guessCntDoc = document.getElementById("guess-count");
+    guessCntDoc.textContent = guessCnt;
+
+    // Print used leters
+    var usedLettersDoc = document.getElementById("used-letters");
+    usedLettersDoc.textContent = usedLettersAry;
+    
+    //Variable debug Console Logs
+    // console.log("wordSearch: " + wordSearch);
+    if (debugLogs == true) {
+      console.log(wordMask);
+      console.log(wordObj);
+      console.log("wordcount :" + wordObj["word"].length);
+      console.log("hintcount :" + wordObj["hint"].length);
+      console.log(wordSelector);
+      console.log("Selected Word: " + wordObj["word"][wordSelector]);
+      console.log(guessCnt);
+      console.log(usedLettersAry);
+    }
+    </script>
   </body>
 
 </html>
