@@ -17,15 +17,16 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12 text-center border">
-          <p>The Hypnotoad will put a word in your head.  You will press the correct letters to display the word.</p>
+        <div id="instruct" class="col-12 text-center border">
+          <p>The Hypnotoad has put a name in your head.</p>  
+          <p>You will be given 10 attempts to press the correct letters to display the word.</p>
         </div>
       </div>
       <div class="row">
-        <div class="col-6 text-center border">
+        <div id="hint-div" class="col-6 text-center border">
           <p><span id="hint">This is where the Hints go</span></p>
         </div>
-        <div class="col-6 text-center border">
+        <div id="game-div" class="col-6 text-center border">
           <p><span id="word-mask">Waiting on Word...</span></p>
           <p> <span id="used-letters">You have typed no Letters</span></p>
           <p>You have <span id="guess-count">XX</span> guesses remaining</p>
@@ -43,45 +44,87 @@
               "leela"],
       hint : ["Old Cranky Man",
               "Young Redheaded Uncle",
-              "One-Eyed Brannigan Lover"]
+              "One-Eyed Brannigan Lover"],
+      image : ["professor.png",
+               "fry.png",
+               "leela.png"],
+      sound : ["professor.wav",
+               "fry.wav",
+               "leela.wav"]
     };
 
     //Select Word for Game
     var wordSelector = Math.floor(Math.random()*wordObj["word"].length)
     var guessCnt = 10;
-    var usedLettersAry = ["f","l","c"];
+    var usedLettersAry = [];
     var wordMask = '';
     var typedLetter = "r";
-
-    //Foreach in Used Letter Array to build word mask
-    wordObj["word"][wordSelector].split('').forEach(function(element) {
-      var wordSearch = usedLettersAry.indexOf(element);
-      if (wordSearch >= 0) {
-        wordMask = wordMask + element + " ";
-      } else {
-        wordMask = wordMask + "_ ";
-      }
-    });
-
-
-  // ** KeyCapture EVENTS! Next!
-
-
+        
     //print Hint 
     var hintDoc = document.getElementById("hint");
     hintDoc.textContent = wordObj["hint"][wordSelector];
 
-    //print WordMask
-    var wordMaskDoc = document.getElementById("word-mask");
-    wordMaskDoc.textContent = wordMask;
+    // Deine Game Div to Show Winner and Loser!
+    var gameDivDoc = document.getElementById("game-div");
+    var hintDivDoc = document.getElementById("hint-div");
 
-    //print Number of guesses Remaining.
+    //print Initial Wordpres
+    wordObj["word"][wordSelector].split('').forEach(function(element) {
+          var wordSearch = usedLettersAry.indexOf(element);
+          if (wordSearch >= 0) {
+            wordMask = wordMask + element + " ";
+          } else {
+            wordMask = wordMask + "_ ";
+          }
+    });
+    var wordMaskDoc = document.getElementById("word-mask");
+    wordMaskDoc.innerHTML = wordMask;
+    console.log(wordMask);
+    
+    //print initial Number of guesses Remaining.
     var guessCntDoc = document.getElementById("guess-count");
     guessCntDoc.textContent = guessCnt;
 
     // Print used leters
     var usedLettersDoc = document.getElementById("used-letters");
-    usedLettersDoc.textContent = usedLettersAry;
+    usedLettersDoc.textContent = "[ None ]"
+
+  // ** KeyCapture EVENTS! Next!
+    document.onkeyup = function(event) {
+        var wordMask = '';
+        guessCnt--;                
+        usedLettersAry.push(event.key);
+        console.log("usedletters on press: " + usedLettersAry);
+        wordObj["word"][wordSelector].split('').forEach(function(element) {
+          var wordSearch = usedLettersAry.indexOf(element);
+          if (wordSearch >= 0) {
+            wordMask = wordMask + element + " ";
+          } else {
+            wordMask = wordMask + "_ ";
+          }
+        });
+        console.log(wordMask);
+        var winCnt = (wordMask.match(/_/g)||[]).length;
+        console.log("wordcount :" + wordObj["word"][wordSelector].length);
+        console.log("winCnt: " + winCnt);
+        wordMaskDoc.innerHTML = wordMask;
+        guessCntDoc.textContent = guessCnt;
+        usedLettersDoc.textContent = "[ " + usedLettersAry + " ]";
+        if (guessCnt < 1 || winCnt < 1) {
+          if (guessCnt < 1 || winCnt > 0) {
+            gameDivDoc.innerHTML = "Game Over<br>You Lose!";
+            hintDivDoc.innerHTML = "<img src=\"assets/images/hypnotoad.gif\"> <br> Maybe a Sound!"
+          } else {
+            gameDivDoc.innerHTML = "You Win!"
+            hintDivDoc.innerHTML = "<img src=\"assets/images/"+wordObj["image"][wordSelector]+"\"> <br> Maybe a Sound!"
+          }
+        }
+    };
+
+    
+
+
+    
     
     //Variable debug Console Logs
     // console.log("wordSearch: " + wordSearch);
