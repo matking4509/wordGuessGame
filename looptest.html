@@ -96,13 +96,19 @@
   // ** KeyCapture EVENTS! Next!
 
     document.onkeyup = function(event) {
-      var wordMask = '';
-          guessCnt--;                
+        guessCnt--;                
           // if (event.key.match(/^[a-z0-9]+$/i) && event.key.match(/^[a-z0-9]+$/i).length == 1 ) {
             usedLettersAry.push(event.key);
           // }
           console.log("usedletters on press: " + usedLettersAry);
-          wordObj["word"][wordSelector].split('').forEach(function(element) {
+          
+        
+    };
+    
+    // for (var i = 0; i > usedLettersAry.length; i++) {
+    // while (gameOn) {
+    wordObj["word"][wordSelector].split('').forEach(function(element) {
+            var wordMask = '';    
             var wordSearch = usedLettersAry.indexOf(element);
             if (wordSearch >= 0) {
               wordMask = wordMask + element + " ";
@@ -117,24 +123,10 @@
           wordMaskDoc.innerHTML = wordMask;
           guessCntDoc.textContent = guessCnt;
           usedLettersDoc.textContent = "[ " + usedLettersAry + " ]";
-        if (guessCnt < 1 || winCnt < 1) {
-          if (guessCnt < 1 || winCnt > 0) {
-            gameDivDoc.innerHTML = "Game Over<br>You Lose!";
-            hintDivDoc.innerHTML = "<img src=\"assets/images/hypnotoad.gif\">";
-            var audio = new Audio("assets/sound/hpnotoadBuzz.mp3");
-            audio.play();
-            gameOn = false;
-          } else {
-            gameDivDoc.innerHTML = "You Win!"
-            hintDivDoc.innerHTML = "<img src=\"assets/images/"+wordObj["image"][wordSelector]+"\">"
-            var audio = new Audio("assets/sound/"+wordObj["sound"][wordSelector]);
-            audio.play();
-            gameOn = false;
+          if (winCnt == 00 || guesscnt > 10){
+              gameOn == false;
           }
-        }
-    };
-    
-    
+    // }
 
     
     
