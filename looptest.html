@@ -33,121 +33,13 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript">
-    
-    var debugLogs = true;
-    
-    var htIntro = new Audio("assets/sound/allhailhynotoad.mp3");
-    htIntro.play();
-    
-    // Word/Hint Dictionary
-    var wordObj = {
-      word : ["professor",
-              "fry",
-              "leela"],
-      hint : ["Old Cranky Man",
-              "Young Redheaded Uncle",
-              "One-Eyed Brannigan Lover"],
-      image : ["professor.png",
-               "fry.png",
-               "leela.png"],
-      sound : ["farnsworth1.mp3",
-               "fry.mp3",
-               "leela.mp3"]
-    };
 
-    //Select Word for Game
-    var wordSelector = Math.floor(Math.random()*wordObj["word"].length)
-    var guessCnt = 10;
-    var usedLettersAry = [];
-    var wordMask = '';
-    var typedLetter = "r";
-    var gameOn = true;
-        
-    //print Hint 
-    var hintDoc = document.getElementById("hint");
-    hintDoc.textContent = wordObj["hint"][wordSelector];
-
-    // Deine Game Div to Show Winner and Loser!
-    var gameDivDoc = document.getElementById("game-div");
-    var hintDivDoc = document.getElementById("hint-div");
-
-    //print Initial Wordpres
-    wordObj["word"][wordSelector].split('').forEach(function(element) {
-          var wordSearch = usedLettersAry.indexOf(element);
-          if (wordSearch >= 0) {
-            wordMask = wordMask + element + " ";
-          } else {
-            wordMask = wordMask + "_ ";
-          }
-    });
-    var wordMaskDoc = document.getElementById("word-mask");
-    wordMaskDoc.innerHTML = wordMask;
-    console.log(wordMask);
-    
-    //print initial Number of guesses Remaining.
-    var guessCntDoc = document.getElementById("guess-count");
-    guessCntDoc.textContent = guessCnt;
-
-    // Print used leters
-    var usedLettersDoc = document.getElementById("used-letters");
-    usedLettersDoc.textContent = "[ None ]"
-
-  // ** KeyCapture EVENTS! Next!
-
-    document.onkeyup = function(event) {
-        guessCnt--;                
-          // if (event.key.match(/^[a-z0-9]+$/i) && event.key.match(/^[a-z0-9]+$/i).length == 1 ) {
-            usedLettersAry.push(event.key);
-          // }
-          console.log("usedletters on press: " + usedLettersAry);
-          
-        
-    };
-    
-    // for (var i = 0; i > usedLettersAry.length; i++) {
-    // while (gameOn) {
-    wordObj["word"][wordSelector].split('').forEach(function(element) {
-            var wordMask = '';    
-            var wordSearch = usedLettersAry.indexOf(element);
-            if (wordSearch >= 0) {
-              wordMask = wordMask + element + " ";
-            } else {
-              wordMask = wordMask + "_ ";
-            }
-          });
-          console.log(wordMask);
-          var winCnt = (wordMask.match(/_/g)||[]).length;
-          console.log("wordcount :" + wordObj["word"][wordSelector].length);
-          console.log("winCnt: " + winCnt);
-          wordMaskDoc.innerHTML = wordMask;
-          guessCntDoc.textContent = guessCnt;
-          usedLettersDoc.textContent = "[ " + usedLettersAry + " ]";
-          if (winCnt == 00 || guesscnt > 10){
-              gameOn == false;
-          }
-    // }
-
-    
-    
-    //Variable debug Console Logs
-    // console.log("wordSearch: " + wordSearch);
-    if (debugLogs == true) {
-      console.log(wordMask);
-      console.log(wordObj);
-      console.log("wordcount :" + wordObj["word"].length);
-      console.log("hintcount :" + wordObj["hint"].length);
-      console.log(wordSelector);
-      console.log("Selected Word: " + wordObj["word"][wordSelector]);
-      console.log(guessCnt);
-      console.log(usedLettersAry);
-    }
-
-    // Filter Alphanumeric Only
-    // After the user wins/loses the game should automatically choose another word and make the user play it.
-    // Wins: (# of times user guessed the word correctly).
-    // test loop / on-key array growth
+    <script type="text/javascript" src="assets/javascript/game.js"></script>    
+    <script>
+        newGame();
+        writeScreen();
     </script>
-  </body>
+  
+</body>
 
 </html>
