@@ -1,14 +1,14 @@
 // Toggle console.logs for debugging.
-var debugLogs = true;
+var debugLogs = false;
 
 // Define Dictionary Object 
 var wordObj = {
     word : ["professor",
             "fry",
             "leela"],
-    hint : ["Old Cranky Man",
-            "Young Redheaded Uncle",
-            "One-Eyed Brannigan Lover"],
+    hint : ["He's a cranky old nephew with Good News for all!",
+            "He's a Young Redheaded Uncle, who really loves his one-eye'd monster",
+            "She's the one-eyed, purple pony tailed, package pusher"],
     image : ["professor.png",
              "fry.png",
              "leela.png"],
@@ -35,14 +35,18 @@ var wordObj = {
   var guessCntDoc = document.getElementById("guess-count");
   var usedLettersDoc = document.getElementById("used-letters");
   var wordMaskDoc = document.getElementById("word-mask");
+  var winCntDoc = document.getElementById("wins");
+  var lossCntDoc = document.getElementById("loss");
+  var htIntro = new Audio("assets/sound/allhailhynotoad.mp3");
 
 function newGame() {
+    htIntro.play(); //
     gameStart();
     writeScreen();
 }; // Close newGame
 
 function restartGame() {
-    console.log("Game Restarted");
+    debugLogs == true ? console.log("Game Restarted") : true;
     guessCnt = 10; // Total Number of Guesses per game
     usedLettersAry = []; // Blank Array to hold Guessed letters
     wordSelector = '';
@@ -50,19 +54,31 @@ function restartGame() {
     gameOver = false;
     hintDivDoc.innerHTML = "<p><span id=\"hint\">This is where the Hints go</span></p>";
     gameDivDoc.innerHTML = "<p><span id=\"word-mask\">Waiting on Word...</span></p><p> <span id=\"used-letters\">You have typed no Letters</span></p><p>You have <span id=\"guess-count\">XX</span> guesses remaining</p>"
+    // Reassert the <span> ids so the writeScreen can find them to update.
+    hintDoc = document.getElementById("hint");
+    guessCntDoc = document.getElementById("guess-count");
+    usedLettersDoc = document.getElementById("used-letters");
+    wordMaskDoc = document.getElementById("word-mask");
+    // winCntDoc = document.getElementById("wins");
+    // lossCntDoc = document.getElementById("loss");
     gameStart();
+    htIntro.play(); //
     writeScreen();
 }
 
 function gameStart() {
     // Select random number, that will select word/hint/image/sound from data dictionary.  
-        wordSelector = Math.floor(Math.random()*wordObj["word"].length)
+    wordSelector = Math.floor(Math.random()*wordObj["word"].length)
 }; // Close gameStart
 
 function writeScreen() {
-    //print Hint 
     var wordMask = '';
+    // Update Wins / Loss
+    winCntDoc.textContent = winCnt;
+    lossCntDoc.textContent = loseCnt;
+    //print Hint 
     hintDoc.textContent = wordObj["hint"][wordSelector];
+    debugLogs == true ? console.log("blah: " + wordObj["hint"][wordSelector]) : true;
     //print initial Number of guesses Remaining.  
     guessCntDoc.textContent = guessCnt;
     // Print used leters
@@ -83,8 +99,8 @@ function writeScreen() {
     });
     wordMaskDoc.innerHTML = wordMask;
     winFlag = wordMask.includes("_");
-    console.log(wordMask);
-    console.log(winFlag);
+    debugLogs == true ? console.log(wordMask) : true;
+    debugLogs == true ? console.log(winFlag) : true;
 }; //Close writeScreen
 
 function checkWinLose() {
@@ -112,16 +128,15 @@ function checkWinLose() {
 document.onkeyup = function(event) {
     //if the game is finished, restart it.
     if(gameOver) {
-        console.log("Game Over!")
+        debugLogs == true ? console.log("Game Over!") : true;
         gameOver = false;
         restartGame();
     } else {
         // Check to make sure a-z was pressed.
         if(event.keyCode >= 65 && event.keyCode <= 90) {
-            // keySound.play();
             guessCnt--;                
             usedLettersAry.push(event.key);
-            console.log(usedLettersAry);
+            debugLogs == true ? console.log("ternary: " + usedLettersAry) : true;
             writeScreen();
             checkWinLose();
         }
@@ -129,12 +144,11 @@ document.onkeyup = function(event) {
 };
 
 if (debugLogs == true) {
-    // console.log(wordMask);
-    console.log(wordObj);
-    console.log("wordcount :" + wordObj["word"].length);
-    console.log("hintcount :" + wordObj["hint"].length);
-    console.log(wordSelector);
-    console.log("Selected Word: " + wordObj["word"][wordSelector]);
-    console.log(guessCnt);
-    console.log(usedLettersAry);
+    debugLogs == true ? console.log(wordObj) : true;
+    debugLogs == true ? console.log("wordcount :" + wordObj["word"].length) : true;
+    debugLogs == true ? console.log("hintcount :" + wordObj["hint"].length) : true;
+    debugLogs == true ? console.log(wordSelector) : true;
+    debugLogs == true ? console.log("Selected Word: " + wordObj["word"][wordSelector]) : true;
+    debugLogs == true ? console.log(guessCnt) : true;
+    debugLogs == true ? console.log(usedLettersAry) : true;
   }
