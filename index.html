@@ -7,30 +7,42 @@
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
     <meta charset="UTF-8">
     <title>All Glory to the Hypnotoad</title>
+    <style>
+     /* A tag to remove the card border */
+     .card {
+      border: none;
+     }
+     </style>
   </head>
 
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-12 border-bottom">
-          <img src="assets/images/WordGuessTitle.png">
+        <div class="col-12 border">
+          <img src="assets/images/WordGuessTitle.png" width="100%">
         </div>
       </div>
       <div class="row">
-        <div id="instruct" class="col-12 text-center border">
+        <div id="instruct" class="align-middle col-12 text-center border">
           <p>The Hypnotoad has put a name in your head.</p>  
           <p>You will be given 10 attempts to press the correct letters to display the word.</p>
           <p>You have given glory to Hypnotoad <span id="wins">WINS</span> and angered him <span id="loss">LOSS</span> times!</p>
         </div>
       </div>
       <div class="row">
-        <div id="hint-div" class="col text-center border">
-          <p><span id="hint">This is where the Hints go</span></p>
+        <div id="hint-div" class="col align-middle text-center border">
+          <p>Hint:</p>
+          <div class="card">
+            <p><span id="hint">This is where the Hints go</span></p>
+          </div>
         </div>
         <div id="game-div" class="col text-center border">
-          <p><span id="word-mask">Waiting on Word...</span></p>
-          <p> <span id="used-letters">You have typed no Letters</span></p>
-          <p>You have <span id="guess-count">XX</span> guesses remaining</p>
+          <p>Data:</p>
+          <div class="card">
+            <p><span id="word-mask">Waiting on Word...</span></p>
+            <p><span id="used-letters">You have typed no Letters</span></p>
+            <p>You have <span id="guess-count">XX</span> guesses remaining</p>
+          </div>
         </div>
       </div>
     </div>

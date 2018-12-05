@@ -38,9 +38,8 @@ var wordObj = {
   var winCntDoc = document.getElementById("wins");
   var lossCntDoc = document.getElementById("loss");
   var htIntro = new Audio("assets/sound/allhailhynotoad.mp3");
-
+  htIntro.play();
 function newGame() {
-    htIntro.play(); //
     gameStart();
     writeScreen();
 }; // Close newGame
@@ -52,8 +51,8 @@ function restartGame() {
     wordSelector = '';
     winFlag = true;
     gameOver = false;
-    hintDivDoc.innerHTML = "<p><span id=\"hint\">This is where the Hints go</span></p>";
-    gameDivDoc.innerHTML = "<p><span id=\"word-mask\">Waiting on Word...</span></p><p> <span id=\"used-letters\">You have typed no Letters</span></p><p>You have <span id=\"guess-count\">XX</span> guesses remaining</p>"
+    hintDivDoc.innerHTML = "<p>Hint:</p><div class=\"card\"><p><span id=\"hint\">This is where the Hints go</span></p></div";
+    gameDivDoc.innerHTML = "<p>Data:</p><div class=\"card\"><p><span id=\"word-mask\">Waiting on Word...</span></p><p> <span id=\"used-letters\">You have typed no Letters</span></p><p>You have <span id=\"guess-count\">XX</span> guesses remaining</p></div>"
     // Reassert the <span> ids so the writeScreen can find them to update.
     hintDoc = document.getElementById("hint");
     guessCntDoc = document.getElementById("guess-count");
@@ -106,15 +105,15 @@ function writeScreen() {
 function checkWinLose() {
     if (winFlag == false || guessCnt < 1) {
         if (guessCnt < 1) { 
-            gameDivDoc.innerHTML = "Game Over<br>You Lose!";
-            hintDivDoc.innerHTML = "<img src=\"assets/images/hypnotoad.gif\">";
+            gameDivDoc.innerHTML = "Game Over<br><h2>You have ANGERED the Hypnotoad!</h2><br><h4>Press a key to redeem youself!</h4>";
+            hintDivDoc.innerHTML = "<img src=\"assets/images/hypnotoad.gif\" width=100%>";
             var audio = new Audio("assets/sound/hpnotoadBuzz.mp3");
             audio.play();
             gameOver = true;
             loseCnt++;
         } else {
-            gameDivDoc.innerHTML = "You Win!"
-            hintDivDoc.innerHTML = "<img src=\"assets/images/"+wordObj["image"][wordSelector]+"\">"
+            gameDivDoc.innerHTML = "You have succeeded, <h2>All Glory to the Hypnotoad!</h2><br><h4>Press a key to give more GLORY!</h4>"
+            hintDivDoc.innerHTML = "<img src=\"assets/images/"+wordObj["image"][wordSelector]+"\" width=100%>"
             var audio = new Audio("assets/sound/"+wordObj["sound"][wordSelector]);
             audio.play();
             gameOver = true;
@@ -136,7 +135,7 @@ document.onkeyup = function(event) {
         if(event.keyCode >= 65 && event.keyCode <= 90) {
             guessCnt--;                
             usedLettersAry.push(event.key);
-            debugLogs == true ? console.log("ternary: " + usedLettersAry) : true;
+            debugLogs == true ? console.log(usedLettersAry) : true;
             writeScreen();
             checkWinLose();
         }
