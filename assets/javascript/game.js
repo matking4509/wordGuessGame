@@ -70,7 +70,7 @@ var wordObj = {
   var winCntDoc = document.getElementById("wins");
   var lossCntDoc = document.getElementById("loss");
   var htIntro = new Audio("assets/sound/allhailhynotoad.mp3");
-  htIntro.play();
+  
 function newGame() {
     gameStart();
     writeScreen();
